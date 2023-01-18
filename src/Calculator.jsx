@@ -1,8 +1,8 @@
 import React from 'react'
-import './calculator.css';
 
 function Calculator() {
     const [input, setInput] = React.useState('');
+    const [history, setHistory] = React.useState([]);
 
     const handleChange = (event) => {
         setInput(event.target.value);
@@ -15,12 +15,19 @@ function Calculator() {
     const calculateResult = () => {
         const result = eval(input);
         setInput(result);
+        if(history.length > 5){
+            history.splice(0,1);
+        }
+        history.push(`${input} = ${result}`);
     }
   return (
-    <div>
-        <h1>Calculator</h1> 
+    <div >
+        <h1 >Calculator</h1>
+        {history.map((h,i)=>
+            <li key={i} onClick={()=>setInput(h)}>{h}</li>)
+        } 
         <div>
-            <input type="text"  value={input} onChange={handleChange}/>
+            <input  type="text"  value={input} onChange={handleChange}/>
             <button onClick={calculateResult}>Calculate</button>
             <button onClick={()=>setInput('')}>Clear</button>
         </div>
