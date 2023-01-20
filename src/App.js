@@ -1,7 +1,8 @@
 import Calculator from './Calculator';
+import Timer from './Timer';
 function App() {
   return (
-   <Calculator />
+  <Timer />
   );
 }
 
