@@ -1,16 +1,23 @@
 import React from 'react'
 
 const Todo = () => {
-    const [items, setItems] = React.useState([{text: 'hello', done: false, editing: false}]);
 
-   
+    let initialItems = JSON.parse(localStorage.getItem('myItems'));
+
+    if(!initialItems){
+        initialItems = [];
+    }
+    const [items, setItems] = React.useState(initialItems);
 
     const handleSubmit = (e) =>{
         e.preventDefault();
         const todo = (e.target.elements.todo.value);
-        setItems([...items, {text: todo, done: false, editing: false}]);
+        const updatedToDos = [...items, {text: todo, done: false, editing: false}];
+        setItems(updatedToDos);
+        localStorage.setItem('myItems', JSON.stringify(updatedToDos));
         // console.log(e.target.elements.todo.value);
         e.target.elements.todo.value = "";
+
         
     }
 
@@ -18,24 +25,28 @@ const Todo = () => {
         const updatedToDos = [...items];
         updatedToDos.splice(index, 1);
         setItems(updatedToDos);
+        localStorage.setItem('myItems', JSON.stringify(updatedToDos));
     }
 
     const handleDone = (index) => {
         const updatedToDos = [...items];
         updatedToDos[index].done = !updatedToDos[index].done;
         setItems(updatedToDos);
+        localStorage.setItem('myItems', JSON.stringify(updatedToDos));
     }
 
     const  handleEdit = (index, event) =>{
         const updatedToDos = [...items];
         updatedToDos[index].text = event.target.value;
         setItems(updatedToDos);
+        localStorage.setItem('myItems', JSON.stringify(updatedToDos));
     }
 
     const handleEditButton = (index, event) => {
         const updatedToDos = [...items];
         updatedToDos[index].editing = !updatedToDos[index].editing;
         setItems(updatedToDos);
+        localStorage.setItem('myItems', JSON.stringify(updatedToDos));
     }
   return (
     <div  style={{padding: '25%'}}>
